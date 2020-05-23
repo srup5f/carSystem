@@ -6,6 +6,7 @@ import com.jkxy.car.api.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -85,4 +86,37 @@ public class CarController {
         carService.insertCar(car);
         return JSONResult.ok();
     }
+
+    /**
+     * 购买车辆
+     *
+     * @param id,num
+     *
+     * @return
+     */
+    @PostMapping("buyCar/{id}/{num}")
+    public JSONResult buyCar(@PathVariable int id,@PathVariable int num) {
+        carService.buyCar(id,num);
+        Car car = carService.findById(id);
+        return JSONResult.ok(car);
+    }
+
+    /**
+     * 模糊查询
+     *
+     * @param carName,begin,length
+     * @return
+     */
+    @GetMapping("vagueSearch/{carName}/{begin}/{end}")
+    public JSONResult vagueSearch(@PathVariable String carName,@PathVariable int begin,@PathVariable int end) {
+        List<Car> cars = carService.findByCarName(carName);
+        List<Car> cars1 = new ArrayList<>();
+        for (int i = 0; i <cars.size() ; i++) {
+            if (i>=(begin-1) && i<=(end-1))
+                cars1.add(cars.get(i));
+        }
+        return JSONResult.ok(cars1);
+
+    }
+
 }

@@ -43,4 +43,10 @@ public class CarServiceImpl implements CarService {
     public void insertCar(Car car) {
         carDao.insertCar(car);
     }
+    @Override
+    public void buyCar(int id,int num) {
+        carDao.buyCar(id,num);
+    }
+
+
 }
